@@ -3,15 +3,37 @@
     "type": "library",
     "description": "Provider-neutral contracts and models for listing items on online marketplaces (eBay, Mercado Libre, ...). Framework-agnostic: no Symfony kernel, no container, no HTTP.",
     "license": "MIT",
-    "keywords": ["marketplace", "ebay", "mercadolibre", "listing", "contracts", "commerce"],
-    "autoload": { "psr-4": { "Survos\\MarketplaceContracts\\": "src/" } },
-    "autoload-dev": { "psr-4": { "Survos\\MarketplaceContracts\\Tests\\": "tests/" } },
-    "require": { "php": "^8.5" },
+    "keywords": [
+        "marketplace",
+        "ebay",
+        "mercadolibre",
+        "listing",
+        "contracts",
+        "commerce"
+    ],
+    "autoload": {
+        "psr-4": {
+            "Survos\\MarketplaceContracts\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Survos\\MarketplaceContracts\\Tests\\": "tests/"
+        }
+    },
+    "require": {
+        "php": "^8.5"
+    },
     "require-dev": {
         "phpunit/phpunit": "^13.0",
         "phpstan/phpstan": "^2.0",
         "symplify/easy-coding-standard": "^13.0"
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "extra": {
+        "branch-alias": {
+            "dev-main": "2.27.x-dev"
+        }
+    }
 }
