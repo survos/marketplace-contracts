@@ -20,10 +20,10 @@ namespace Survos\MarketplaceContracts\Model;
 final readonly class ListingDraft
 {
     /**
-     * @param string                               $sku        seller's own identifier; eBay keys inventory on it
-     * @param list<ListingImage>                   $images
-     * @param array<string, string|list<string>>   $attributes category attributes, keyed by name
-     * @param string                               $locale     BCP 47, e.g. `en-US`, `es-MX`
+     * @param string                             $sku        seller's own identifier; eBay keys inventory on it
+     * @param list<ListingImage>                 $images
+     * @param array<string, string|list<string>> $attributes category attributes, keyed by name
+     * @param string                             $locale     BCP 47, e.g. `en-US`, `es-MX`
      */
     public function __construct(
         public string $sku,
@@ -88,7 +88,7 @@ final readonly class ListingDraft
     {
         $value = $this->attributes[$name] ?? null;
 
-        return $value !== null && $value !== '' && $value !== [];
+        return null !== $value && '' !== $value && [] !== $value;
     }
 
     /**
@@ -102,10 +102,10 @@ final readonly class ListingDraft
     {
         $violations = [];
 
-        if (trim($this->sku) === '') {
+        if ('' === trim($this->sku)) {
             $violations[] = new ListingViolation(ViolationCode::SkuMissing, 'sku', 'SKU is required.');
         }
-        if ($this->categoryId === null || $this->categoryId === '') {
+        if (null === $this->categoryId || '' === $this->categoryId) {
             $violations[] = new ListingViolation(
                 ViolationCode::CategoryMissing,
                 'categoryId',
@@ -127,7 +127,7 @@ final readonly class ListingDraft
             );
         }
 
-        if ($limits === null) {
+        if (null === $limits) {
             return $violations;
         }
 
@@ -138,14 +138,14 @@ final readonly class ListingDraft
                 'title',
                 sprintf(
                     'Title is %d characters; the limit is %d. Regenerate within the limit rather than '
-                    . 'truncating -- a title cut mid-word reads as broken.',
+                    .'truncating -- a title cut mid-word reads as broken.',
                     $titleLength,
                     $limits->titleMaxLength,
                 ),
             );
         }
 
-        if ($limits->descriptionMaxLength !== null && mb_strlen($this->description) > $limits->descriptionMaxLength) {
+        if (null !== $limits->descriptionMaxLength && mb_strlen($this->description) > $limits->descriptionMaxLength) {
             $violations[] = new ListingViolation(
                 ViolationCode::DescriptionTooLong,
                 'description',

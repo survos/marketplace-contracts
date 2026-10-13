@@ -17,8 +17,8 @@ use Survos\MarketplaceContracts\Model\CategorySuggestion;
 interface CategoryResolverInterface
 {
     /**
-     * @param string $title  free text, typically the AI-generated listing title
-     * @param int    $limit  maximum suggestions to return, best first
+     * @param string $title free text, typically the AI-generated listing title
+     * @param int    $limit maximum suggestions to return, best first
      *
      * @return list<CategorySuggestion> empty when the provider has no opinion
      */

@@ -59,10 +59,6 @@ final class MarketplaceRegistry
             }
         }
 
-        throw new MarketplaceConfigurationException(sprintf(
-            'No adapter factory handles driver "%s". Registered: %s.',
-            $connection->driver,
-            $this->factories === [] ? '(none)' : implode(', ', $this->drivers()),
-        ));
+        throw new MarketplaceConfigurationException(sprintf('No adapter factory handles driver "%s". Registered: %s.', $connection->driver, [] === $this->factories ? '(none)' : implode(', ', $this->drivers())));
     }
 }

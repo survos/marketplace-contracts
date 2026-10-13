@@ -29,6 +29,6 @@ final readonly class CategorySuggestion
 
     public function breadcrumb(string $separator = ' > '): string
     {
-        return implode($separator, $this->path !== [] ? $this->path : [$this->name]);
+        return implode($separator, [] !== $this->path ? $this->path : [$this->name]);
     }
 }

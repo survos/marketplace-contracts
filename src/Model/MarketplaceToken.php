@@ -54,7 +54,7 @@ final readonly class MarketplaceToken
             accessToken: $accessToken,
             accessTokenExpiresAt: $now->modify(sprintf('+%d seconds', $expiresIn)),
             refreshToken: $refreshToken,
-            refreshTokenExpiresAt: $refreshExpiresIn !== null
+            refreshTokenExpiresAt: null !== $refreshExpiresIn
                 ? $now->modify(sprintf('+%d seconds', $refreshExpiresIn))
                 : null,
             scopes: $scopes,
@@ -74,10 +74,10 @@ final readonly class MarketplaceToken
 
     public function canRefresh(?\DateTimeImmutable $now = null): bool
     {
-        if ($this->refreshToken === null) {
+        if (null === $this->refreshToken) {
             return false;
         }
-        if ($this->refreshTokenExpiresAt === null) {
+        if (null === $this->refreshTokenExpiresAt) {
             return true;
         }
 
@@ -104,9 +104,9 @@ final readonly class MarketplaceToken
             accessToken: $accessToken,
             accessTokenExpiresAt: $now->modify(sprintf('+%d seconds', $expiresIn)),
             refreshToken: $newRefreshToken ?? $this->refreshToken,
-            refreshTokenExpiresAt: $refreshExpiresIn !== null
+            refreshTokenExpiresAt: null !== $refreshExpiresIn
                 ? $now->modify(sprintf('+%d seconds', $refreshExpiresIn))
-                : ($newRefreshToken !== null ? null : $this->refreshTokenExpiresAt),
+                : (null !== $newRefreshToken ? null : $this->refreshTokenExpiresAt),
             scopes: $this->scopes,
         );
     }

@@ -48,26 +48,17 @@ final readonly class Money implements \Stringable
         $trimmed = trim($amount);
 
         if (!preg_match('/^(?<sign>-?)(?<whole>\d+)(?:\.(?<fraction>\d+))?$/', $trimmed, $m)) {
-            throw new MarketplaceConfigurationException(
-                sprintf('"%s" is not a decimal amount.', $amount),
-            );
+            throw new MarketplaceConfigurationException(sprintf('"%s" is not a decimal amount.', $amount));
         }
 
         $fraction = $m['fraction'] ?? '';
         if (strlen($fraction) > $exponent) {
-            throw new MarketplaceConfigurationException(sprintf(
-                '"%s" has %d decimal places but %s has %d. Round before constructing Money '
-                . 'so the rounding is a decision someone made, not one this class made quietly.',
-                $amount,
-                strlen($fraction),
-                strtoupper($currency),
-                $exponent,
-            ));
+            throw new MarketplaceConfigurationException(sprintf('"%s" has %d decimal places but %s has %d. Round before constructing Money so the rounding is a decision someone made, not one this class made quietly.', $amount, strlen($fraction), strtoupper($currency), $exponent));
         }
 
-        $minor = (int) ($m['whole'] . str_pad($fraction, $exponent, '0'));
+        $minor = (int) ($m['whole'].str_pad($fraction, $exponent, '0'));
 
-        return new self($m['sign'] === '-' ? -$minor : $minor, self::normalizeCurrency($currency), $exponent);
+        return new self('-' === $m['sign'] ? -$minor : $minor, self::normalizeCurrency($currency), $exponent);
     }
 
     /**
@@ -78,8 +69,8 @@ final readonly class Money implements \Stringable
         $sign = $this->minorUnits < 0 ? '-' : '';
         $abs = abs($this->minorUnits);
 
-        if ($this->exponent === 0) {
-            return $sign . $abs;
+        if (0 === $this->exponent) {
+            return $sign.$abs;
         }
 
         $divisor = 10 ** $this->exponent;
@@ -89,7 +80,7 @@ final readonly class Money implements \Stringable
 
     public function isZero(): bool
     {
-        return $this->minorUnits === 0;
+        return 0 === $this->minorUnits;
     }
 
     public function isNegative(): bool
@@ -125,17 +116,13 @@ final readonly class Money implements \Stringable
 
     public function __toString(): string
     {
-        return $this->toDecimal() . ' ' . $this->currency;
+        return $this->toDecimal().' '.$this->currency;
     }
 
     private function assertComparable(self $other): void
     {
         if ($this->currency !== $other->currency) {
-            throw new MarketplaceConfigurationException(sprintf(
-                'Cannot combine %s with %s. Convert first; this class does not hold exchange rates.',
-                $this->currency,
-                $other->currency,
-            ));
+            throw new MarketplaceConfigurationException(sprintf('Cannot combine %s with %s. Convert first; this class does not hold exchange rates.', $this->currency, $other->currency));
         }
     }
 
@@ -144,9 +131,7 @@ final readonly class Money implements \Stringable
         $normalized = strtoupper(trim($currency));
 
         if (!preg_match('/^[A-Z]{3}$/', $normalized)) {
-            throw new MarketplaceConfigurationException(
-                sprintf('"%s" is not an ISO 4217 currency code.', $currency),
-            );
+            throw new MarketplaceConfigurationException(sprintf('"%s" is not an ISO 4217 currency code.', $currency));
         }
 
         return $normalized;
@@ -155,9 +140,7 @@ final readonly class Money implements \Stringable
     private static function assertExponent(int $exponent): int
     {
         if ($exponent < 0 || $exponent > 4) {
-            throw new MarketplaceConfigurationException(
-                sprintf('Currency exponent %d is out of range (0-4).', $exponent),
-            );
+            throw new MarketplaceConfigurationException(sprintf('Currency exponent %d is out of range (0-4).', $exponent));
         }
 
         return $exponent;

@@ -29,7 +29,7 @@ enum ListingCondition: string
 
     public function isNew(): bool
     {
-        return $this === self::New || $this === self::NewOther;
+        return self::New === $this || self::NewOther === $this;
     }
 
     public function label(): string

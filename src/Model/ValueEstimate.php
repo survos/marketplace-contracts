@@ -42,10 +42,7 @@ final readonly class ValueEstimate
         ?string $basis = null,
     ): self {
         if ($confidence < 0.0 || $confidence > 1.0) {
-            throw new MarketplaceConfigurationException(sprintf(
-                'Confidence must be between 0 and 1, got %s.',
-                var_export($confidence, true),
-            ));
+            throw new MarketplaceConfigurationException(sprintf('Confidence must be between 0 and 1, got %s.', var_export($confidence, true)));
         }
 
         return new self($situation, $range, $confidence, self::trimToNull($basis));

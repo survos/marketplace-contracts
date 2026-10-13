@@ -27,9 +27,9 @@ final class UnsupportedMarketplaceOperation extends \LogicException implements M
     {
         return new self(sprintf(
             'The %s adapter has no sandbox. Mercado Libre, in particular, has no test '
-            . 'environment at all -- create test users against production instead (up to 10 '
-            . 'per account, permanently undeletable, and test listings must be titled '
-            . '"Test item - Do not offer").',
+            .'environment at all -- create test users against production instead (up to 10 '
+            .'per account, permanently undeletable, and test listings must be titled '
+            .'"Test item - Do not offer").',
             $provider,
         ));
     }

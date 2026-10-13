@@ -33,7 +33,7 @@ final readonly class ConnectionConfiguration
         public bool $sandbox = false,
         public array $options = [],
     ) {
-        if (trim($name) === '' || trim($driver) === '' || trim($site) === '') {
+        if ('' === trim($name) || '' === trim($driver) || '' === trim($site)) {
             throw new MarketplaceConfigurationException('name, driver and site are all required.');
         }
     }
@@ -48,13 +48,8 @@ final readonly class ConnectionConfiguration
     {
         $value = $this->options[$key] ?? null;
 
-        if ($value === null || $value === '') {
-            throw new MarketplaceConfigurationException(sprintf(
-                'Connection "%s" (%s) is missing required option "%s".',
-                $this->name,
-                $this->driver,
-                $key,
-            ));
+        if (null === $value || '' === $value) {
+            throw new MarketplaceConfigurationException(sprintf('Connection "%s" (%s) is missing required option "%s".', $this->name, $this->driver, $key));
         }
 
         return $value;

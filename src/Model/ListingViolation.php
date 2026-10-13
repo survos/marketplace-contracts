@@ -24,7 +24,7 @@ final readonly class ListingViolation implements \Stringable
     {
         return new self(
             ViolationCode::MissingRequiredAttribute,
-            'attributes.' . $name,
+            'attributes.'.$name,
             sprintf('Required attribute "%s" is missing.', $name),
         );
     }
@@ -37,7 +37,7 @@ final readonly class ListingViolation implements \Stringable
 
         return new self(
             ViolationCode::ValueNotAllowed,
-            'attributes.' . $name,
+            'attributes.'.$name,
             sprintf('"%s" is not an accepted value for "%s". Allowed: %s%s.', $value, $name, implode(', ', $shown), $suffix),
         );
     }

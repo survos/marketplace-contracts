@@ -95,15 +95,15 @@ final readonly class AttributeSchema implements \Countable
             if (!$definition->isMultiValued() && count($values) > 1) {
                 $violations[] = new ListingViolation(
                     ViolationCode::TooManyValues,
-                    'attributes.' . $name,
+                    'attributes.'.$name,
                     sprintf('"%s" accepts a single value, got %d.', $name, count($values)),
                 );
             }
 
-            if ($definition->maxValues !== null && count($values) > $definition->maxValues) {
+            if (null !== $definition->maxValues && count($values) > $definition->maxValues) {
                 $violations[] = new ListingViolation(
                     ViolationCode::TooManyValues,
-                    'attributes.' . $name,
+                    'attributes.'.$name,
                     sprintf('"%s" accepts at most %d values, got %d.', $name, $definition->maxValues, count($values)),
                 );
             }
@@ -142,7 +142,7 @@ final readonly class AttributeSchema implements \Countable
         ];
 
         $required = $this->requiredNames();
-        if ($required !== []) {
+        if ([] !== $required) {
             $schema['required'] = $required;
         }
 
@@ -155,7 +155,7 @@ final readonly class AttributeSchema implements \Countable
      */
     public function describe(): string
     {
-        if ($this->attributes === []) {
+        if ([] === $this->attributes) {
             return sprintf('Category %s declares no attributes.', $this->categoryId);
         }
 
@@ -165,7 +165,7 @@ final readonly class AttributeSchema implements \Countable
             if ($definition->isClosedSet()) {
                 $shown = array_slice($definition->allowedValues, 0, 6);
                 $more = count($definition->allowedValues) - count($shown);
-                $parts[] = 'one of: ' . implode(', ', $shown) . ($more > 0 ? sprintf(' (+%d more)', $more) : '');
+                $parts[] = 'one of: '.implode(', ', $shown).($more > 0 ? sprintf(' (+%d more)', $more) : '');
             } else {
                 $parts[] = $definition->valueType->value;
             }

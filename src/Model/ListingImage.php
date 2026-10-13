@@ -20,11 +20,7 @@ final readonly class ListingImage implements \Stringable
         public ?string $caption = null,
     ) {
         if (!str_starts_with($url, 'https://')) {
-            throw new MarketplaceConfigurationException(sprintf(
-                'Listing image URLs must be https, got "%s". eBay rejects plain http outright '
-                . 'and Mercado Libre will not fetch it.',
-                $url,
-            ));
+            throw new MarketplaceConfigurationException(sprintf('Listing image URLs must be https, got "%s". eBay rejects plain http outright and Mercado Libre will not fetch it.', $url));
         }
     }
 

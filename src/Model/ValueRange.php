@@ -35,21 +35,13 @@ final readonly class ValueRange implements \Stringable
     public static function between(Money $low, Money $high): self
     {
         if ($low->currency !== $high->currency) {
-            throw new MarketplaceConfigurationException(sprintf(
-                'A value range needs one currency, got %s and %s.',
-                $low->currency,
-                $high->currency,
-            ));
+            throw new MarketplaceConfigurationException(sprintf('A value range needs one currency, got %s and %s.', $low->currency, $high->currency));
         }
 
         // Swapping silently would hide whichever upstream bug produced the pair --
         // an AI estimate with the bounds reversed is a signal worth surfacing.
         if ($low->minorUnits > $high->minorUnits) {
-            throw new MarketplaceConfigurationException(sprintf(
-                'Value range is inverted: low %s is above high %s.',
-                $low,
-                $high,
-            ));
+            throw new MarketplaceConfigurationException(sprintf('Value range is inverted: low %s is above high %s.', $low, $high));
         }
 
         return new self($low, $high);

@@ -23,7 +23,6 @@ final readonly class AttributeDefinition
      * for a Mexican postcard category, and an enum built from that forces a model to
      * mislabel a Chiapas postcard as Spanish. Confidently wrong beats absent only
      * from the model's point of view.
-     *
      * @param int|null $maxValues null = unlimited; 1 = single-valued
      */
     public function __construct(
@@ -39,12 +38,12 @@ final readonly class AttributeDefinition
 
     public function isClosedSet(): bool
     {
-        return $this->allowedValues !== [];
+        return [] !== $this->allowedValues;
     }
 
     public function isMultiValued(): bool
     {
-        return $this->maxValues === null || $this->maxValues > 1;
+        return null === $this->maxValues || $this->maxValues > 1;
     }
 
     public function allows(string $value): bool
@@ -54,7 +53,7 @@ final readonly class AttributeDefinition
         }
 
         foreach ($this->allowedValues as $allowed) {
-            if (strcasecmp($allowed, $value) === 0) {
+            if (0 === strcasecmp($allowed, $value)) {
                 return true;
             }
         }
@@ -73,11 +72,11 @@ final readonly class AttributeDefinition
 
         if ($this->isClosedSet()) {
             $scalar['enum'] = $this->allowedValues;
-        } elseif ($this->examples !== []) {
+        } elseif ([] !== $this->examples) {
             // examples, not enum: a model may follow them, but is not confined to them.
             $scalar['examples'] = $this->examples;
         }
-        if ($this->hint !== null && $this->hint !== '') {
+        if (null !== $this->hint && '' !== $this->hint) {
             $scalar['description'] = $this->hint;
         }
 
@@ -86,7 +85,7 @@ final readonly class AttributeDefinition
         }
 
         $array = ['type' => 'array', 'items' => $scalar];
-        if ($this->maxValues !== null) {
+        if (null !== $this->maxValues) {
             $array['maxItems'] = $this->maxValues;
         }
 

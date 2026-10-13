@@ -20,13 +20,13 @@ namespace Survos\MarketplaceContracts\Model;
 final readonly class ShippingSpec
 {
     /**
-     * @param string    $serviceCode        provider-specific shipping service, e.g. eBay's
-     *                                      `eBayStandardEnvelope` or `USPSGroundAdvantage`.
-     *                                      Opaque here; adapters validate it.
-     * @param Money     $firstItemCost      charged once per order
+     * @param string     $serviceCode        provider-specific shipping service, e.g. eBay's
+     *                                       `eBayStandardEnvelope` or `USPSGroundAdvantage`.
+     *                                       Opaque here; adapters validate it.
+     * @param Money      $firstItemCost      charged once per order
      * @param Money|null $additionalItemCost charged per extra unit; null means the
      *                                       provider default (usually: same as first)
-     * @param int       $handlingTimeDays   business days between sale and dispatch
+     * @param int        $handlingTimeDays   business days between sale and dispatch
      */
     public function __construct(
         public string $serviceCode,

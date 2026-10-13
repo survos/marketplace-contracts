@@ -34,7 +34,7 @@ interface ListingPublisherInterface
      * Take a published listing down.
      *
      * @throws \Survos\MarketplaceContracts\Exception\UnsupportedMarketplaceOperation
-     *         when the adapter lacks {@see \Survos\MarketplaceContracts\Model\ProviderCapability::Withdraw}
+     *                                                                                when the adapter lacks {@see \Survos\MarketplaceContracts\Model\ProviderCapability::Withdraw}
      */
     public function withdraw(string $externalId): void;
 }

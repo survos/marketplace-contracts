@@ -22,7 +22,7 @@ final class ListingRejectedException extends \RuntimeException implements Market
         ?\Throwable $previous = null,
     ) {
         parent::__construct(
-            $message !== '' ? $message : self::summarize($provider, $violations),
+            '' !== $message ? $message : self::summarize($provider, $violations),
             0,
             $previous,
         );
@@ -31,14 +31,14 @@ final class ListingRejectedException extends \RuntimeException implements Market
     /** @param list<ListingViolation> $violations */
     private static function summarize(string $provider, array $violations): string
     {
-        if ($violations === []) {
+        if ([] === $violations) {
             return sprintf('%s rejected the listing without saying why.', $provider);
         }
 
         return sprintf(
             "%s rejected the listing:\n%s",
             $provider,
-            implode("\n", array_map(static fn (ListingViolation $v): string => '  ' . $v, $violations)),
+            implode("\n", array_map(static fn (ListingViolation $v): string => '  '.$v, $violations)),
         );
     }
 }
